@@ -15,7 +15,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/FlavioAmurrioCS/docker-build-context/internal/dctx"
+	"github.com/FlavioAmurrioCS/docker-build-context/dctx"
 )
 
 // version is overwritten at build time with -X main.version=...

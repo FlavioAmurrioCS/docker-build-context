@@ -35,7 +35,7 @@ func TestParseRulesStripsBOM(t *testing.T) {
 }
 
 func TestPerDockerfileIgnoreFileWins(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "perdockerfile", "context")
+	dir := filepath.Join("..", "testdata", "perdockerfile", "context")
 	f, err := LoadIgnoreFile(dir, "Prj1")
 	if err != nil {
 		t.Fatal(err)
@@ -61,7 +61,7 @@ func TestResolveDockerfileAcceptsLowercase(t *testing.T) {
 	// The answer has to be the same on a case-sensitive filesystem and on a
 	// case-insensitive one, which is why resolution reads the directory
 	// listing instead of stat'ing each candidate.
-	dir := filepath.Join("..", "..", "testdata", "lowercase", "context")
+	dir := filepath.Join("..", "testdata", "lowercase", "context")
 
 	got := ResolveDockerfile(dir, "")
 	if got != "dockerfile" {
@@ -81,7 +81,7 @@ func TestResolveDockerfileAcceptsLowercase(t *testing.T) {
 }
 
 func TestResolveDockerfileHonoursExplicitFlag(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "lowercase", "context")
+	dir := filepath.Join("..", "testdata", "lowercase", "context")
 	if got := ResolveDockerfile(dir, "Other"); got != "Other" {
 		t.Errorf("ResolveDockerfile() = %q, want Other", got)
 	}
@@ -91,7 +91,7 @@ func TestPercentInIgnoreFileNameIsNotAFormatVerb(t *testing.T) {
 	// The original tool built errors with fmt.Errorf(name+": %w"), so a name
 	// containing % corrupted the message. Loading must succeed and report the
 	// name verbatim.
-	dir := filepath.Join("..", "..", "testdata", "percent", "context")
+	dir := filepath.Join("..", "testdata", "percent", "context")
 	f, err := LoadIgnoreFile(dir, "we%ird")
 	if err != nil {
 		t.Fatal(err)
@@ -102,7 +102,7 @@ func TestPercentInIgnoreFileNameIsNotAFormatVerb(t *testing.T) {
 }
 
 func TestMissingIgnoreFileIsNotAnError(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "none", "context")
+	dir := filepath.Join("..", "testdata", "none", "context")
 	f, err := LoadIgnoreFile(dir, "Dockerfile")
 	if err != nil {
 		t.Fatal(err)

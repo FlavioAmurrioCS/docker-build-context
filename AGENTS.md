@@ -36,7 +36,7 @@ wrapper around the binary.
 
 ## Correctness invariants
 
-Read these before changing `internal/dctx/`:
+Read these before changing `dctx/`:
 
 - `ignorefile.go` resolves `<dockerfile>.dockerignore` then `.dockerignore`,
   matching `buildkit/frontend/dockerui/config.go`. It recovers line numbers by
@@ -64,6 +64,14 @@ contains these, so the listing does too.
 Bump `SchemaVersion` in `walk.go` and `SCHEMA_VERSION` in
 `src/docker_build_context/__init__.py` together. The Python wrapper refuses a
 document it does not recognise.
+
+## `dctx` is a public package
+
+It sits at `dctx/`, not `internal/`, because `FlavioAmurrioCS/docker-devtools`
+imports it for its `context` subcommands. Treat its exported names as API:
+renaming one breaks that repo. `internal/` would make the import impossible,
+and copying the walker into the other repo would give two things to keep in
+step with one conformance suite.
 
 ## Tooling
 

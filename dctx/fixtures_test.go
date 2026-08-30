@@ -15,7 +15,7 @@ import (
 // binary to prevent it. This test names the cause instead of leaving the next
 // reader to derive it.
 func TestFixturesUseLFEndings(t *testing.T) {
-	root := filepath.Join("..", "..", "testdata")
+	root := filepath.Join("..", "testdata")
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
 			return err

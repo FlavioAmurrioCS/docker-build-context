@@ -6,7 +6,7 @@ import (
 )
 
 func TestExplainReportsDecisiveRule(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "reinclude", "context")
+	dir := filepath.Join("..", "testdata", "reinclude", "context")
 
 	exp, err := Explain(Options{Context: dir}, "node_modules/keep/index.js")
 	if err != nil {
@@ -31,7 +31,7 @@ func TestExplainReportsDecisiveRule(t *testing.T) {
 }
 
 func TestExplainOnUnmatchedPath(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "reinclude", "context")
+	dir := filepath.Join("..", "testdata", "reinclude", "context")
 	exp, err := Explain(Options{Context: dir}, "app.js")
 	if err != nil {
 		t.Fatal(err)
@@ -50,7 +50,7 @@ func TestExplainOnUnmatchedPath(t *testing.T) {
 // Explaining a path that is not there is useful while editing .dockerignore,
 // so it must work and say so.
 func TestExplainHypotheticalPath(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "reinclude", "context")
+	dir := filepath.Join("..", "testdata", "reinclude", "context")
 	exp, err := Explain(Options{Context: dir}, "node_modules/other/thing.js")
 	if err != nil {
 		t.Fatal(err)
@@ -64,7 +64,7 @@ func TestExplainHypotheticalPath(t *testing.T) {
 }
 
 func TestExplainRejectsPathsOutsideTheContext(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "reinclude", "context")
+	dir := filepath.Join("..", "testdata", "reinclude", "context")
 	for _, target := range []string{"..", "../elsewhere", "."} {
 		if _, err := Explain(Options{Context: dir}, target); err == nil {
 			t.Errorf("Explain(%q) succeeded, want an error", target)

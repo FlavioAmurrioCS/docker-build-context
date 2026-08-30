@@ -20,7 +20,7 @@ type fixtureCase struct {
 
 func fixtures(t *testing.T) []string {
 	t.Helper()
-	dirs, err := filepath.Glob(filepath.Join("..", "..", "testdata", "*"))
+	dirs, err := filepath.Glob(filepath.Join("..", "testdata", "*"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +133,7 @@ func TestWalkGolden(t *testing.T) {
 // a/b/__pycache__/x/y.pyc into the context under a "**/__pycache__" rule.
 func TestDeepDoubleStarIsIgnored(t *testing.T) {
 	res, err := Walk(context.Background(), Options{
-		Context: filepath.Join("..", "..", "testdata", "pycache", "context"),
+		Context: filepath.Join("..", "testdata", "pycache", "context"),
 		Mode:    ModeIncluded,
 	})
 	if err != nil {
@@ -151,7 +151,7 @@ func TestDeepDoubleStarIsIgnored(t *testing.T) {
 // something inside it, because it has to exist to hold it.
 func TestMaterializedDirectory(t *testing.T) {
 	res, err := Walk(context.Background(), Options{
-		Context: filepath.Join("..", "..", "testdata", "reinclude", "context"),
+		Context: filepath.Join("..", "testdata", "reinclude", "context"),
 		Mode:    ModeAll,
 	})
 	if err != nil {
@@ -182,7 +182,7 @@ func TestMaterializedDirectory(t *testing.T) {
 // the default mode skips ignored subtrees, so it must report null rather than
 // an undercount.
 func TestIgnoredTotalsOnlyWhenCounted(t *testing.T) {
-	dir := filepath.Join("..", "..", "testdata", "trailing", "context")
+	dir := filepath.Join("..", "testdata", "trailing", "context")
 
 	included, err := Walk(context.Background(), Options{Context: dir, Mode: ModeIncluded})
 	if err != nil {
