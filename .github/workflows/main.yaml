@@ -191,7 +191,7 @@ jobs:
           path: binaries/
       - name: Checksum the binaries
         run: cd binaries && sha256sum ./*.tar.gz > SHA256SUMS
-      - uses: sigstore/gh-action-sigstore-python@v3.3.0
+      - uses: sigstore/gh-action-sigstore-python@v3.5.0
         with:
           inputs: >-
             ./dist/*.tar.gz
