@@ -29,7 +29,8 @@ jobs:
           go-version-file: go.mod
       - run: go vet ./...
       - run: go test ./...
-      - uses: golangci/golangci-lint-action@v8
+      # v9 moved the action to node24; v8 runs on the deprecated node20.
+      - uses: golangci/golangci-lint-action@v9
         with:
           version: latest
 
@@ -113,6 +114,10 @@ jobs:
 
   binaries:
     name: binary (${{ matrix.target }})
+    # Only the tag-only release job consumes these, and on a branch the version
+    # would read "main". The wheels matrix already cross-compiles every target
+    # on each push, so nothing is lost by skipping this one.
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     needs: [go]
     runs-on: ubuntu-latest
     strategy:
