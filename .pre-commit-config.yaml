@@ -8,6 +8,8 @@ ci:
     - go-fmt
     - go-lint
     - go-test
+    - taplo-format
+    - taplo-lint
     - shellcheck
     - shfmt
     - vale-prose
@@ -48,13 +50,6 @@ repos:
     hooks:
       - id: uv-lock
 
-  - repo: https://github.com/ComPWA/mirrors-taplo
-    rev: "v0.9.3"
-    hooks:
-      - id: taplo-format
-      - id: taplo-lint
-        args: []
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.14
     hooks:
@@ -91,6 +86,18 @@ repos:
         language: system
         types: [go]
         pass_filenames: false
+
+      - id: taplo-format
+        name: taplo format
+        entry: mise x -- taplo format
+        language: system
+        types: [toml]
+
+      - id: taplo-lint
+        name: taplo lint
+        entry: mise x -- taplo lint
+        language: system
+        types: [toml]
 
       - id: shellcheck
         name: shellcheck

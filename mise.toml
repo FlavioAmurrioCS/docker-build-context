@@ -13,6 +13,12 @@ uv = "latest"
 "pipx:pre-commit" = "latest"
 
 golangci-lint = "latest"
+
+# taplo from its release binaries, not the PyPI package: taplo publishes no
+# aarch64 Linux wheel, so the pre-commit hook falls back to the sdist and
+# tries to compile it with Rust. That breaks on arm64 Linux, which the
+# fresh-clone container is.
+taplo = "latest"
 gitleaks = "latest"
 shellcheck = "latest"
 shfmt = "latest"
