@@ -18,9 +18,16 @@ command -v docker >/dev/null 2>&1 || {
 
 echo "==> testing a fresh clone in $IMAGE"
 
+# MISE_AQUA_GITHUB_ATTESTATIONS: uv and golangci-lint now publish through
+# GitHub's immutable releases, so their attestation carries the identity
+# "https://dotcom.releases.github.com" while mise's aqua registry still expects
+# the project's own release workflow. Every install of those two fails as a
+# result, on any machine, which is unrelated to anything in this repo. Checksum
+# verification still runs. Drop this once the registry catches up.
 docker run --rm -i \
   -v "$REPO_ROOT:/src:ro" \
   -e MISE_YES=1 \
+  -e MISE_AQUA_GITHUB_ATTESTATIONS=false \
   "$IMAGE" bash -s <<'INNER'
 set -euo pipefail
 step() { printf '\n\033[1m--- %s\033[0m\n' "$1"; }

@@ -55,7 +55,7 @@ running daemon.
 
 ## Usage
 
-```
+```text
 docker-build-context ls [PATH] [flags]         list context files
 docker-build-context explain PATH [flags]      show which rule decided a path
 docker-build-context install-docker-plugin     register as "docker buildcontext"

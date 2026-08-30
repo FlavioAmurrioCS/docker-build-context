@@ -61,6 +61,16 @@ repos:
         types_or: [python, pyi]
         exclude: ^testdata/
 
+  # rumdl publishes aarch64 wheels for both glibc and musl, so the upstream
+  # hook installs everywhere, including the arm64 fresh-clone container. That
+  # is why this one stays a normal remote hook while taplo needed mise.
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.2.62
+    hooks:
+      - id: rumdl
+        args: [--fix]
+      - id: rumdl-fmt
+
   # Go and shell tooling runs from the mise-pinned binaries. The upstream
   # shellcheck hook runs inside Docker, which would make Docker a requirement
   # for committing and break anywhere it is unavailable.
