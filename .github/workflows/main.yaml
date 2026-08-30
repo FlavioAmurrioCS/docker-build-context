@@ -23,7 +23,7 @@ jobs:
           - windows-latest
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
@@ -38,7 +38,7 @@ jobs:
     name: conformance against docker build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
@@ -50,7 +50,7 @@ jobs:
     name: python
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # hatch-vcs derives the version from tags
       - uses: actions/setup-go@v7
@@ -81,7 +81,7 @@ jobs:
           - windows-amd64
           - windows-arm64
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-go@v7
@@ -102,7 +102,7 @@ jobs:
     needs: [go, python]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v7
@@ -130,7 +130,7 @@ jobs:
           - { target: windows-amd64, goos: windows, goarch: amd64 }
           - { target: windows-arm64, goos: windows, goarch: arm64 }
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/setup-go@v7
