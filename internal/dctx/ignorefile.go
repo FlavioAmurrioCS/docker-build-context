@@ -57,16 +57,33 @@ func (f *IgnoreFile) Patterns() []string {
 // When flagValue is empty this mirrors BuildKit, which looks for "Dockerfile"
 // and also accepts the lowercase spelling (moby/moby#10858). The returned name
 // need not exist: it is only used to derive "<name>.dockerignore".
+//
+// The candidates are compared against the directory listing rather than
+// stat'ed, so the answer does not depend on whether the filesystem is
+// case-sensitive. os.Stat("Dockerfile") succeeds on a macOS volume holding
+// only "dockerfile", which would report a different name than the same tree
+// on Linux. Both spellings open the same file there either way, so this
+// changes only what gets reported, not which file is used.
 func ResolveDockerfile(contextDir, flagValue string) string {
 	if flagValue != "" {
 		return flagValue
 	}
-	if _, err := os.Stat(filepath.Join(contextDir, DefaultDockerfileName)); err == nil {
+	lower := strings.ToLower(DefaultDockerfileName)
+	entries, err := os.ReadDir(contextDir)
+	if err != nil {
 		return DefaultDockerfileName
 	}
-	lower := strings.ToLower(DefaultDockerfileName)
-	if _, err := os.Stat(filepath.Join(contextDir, lower)); err == nil {
-		return lower
+	found := ""
+	for _, e := range entries {
+		switch e.Name() {
+		case DefaultDockerfileName:
+			return DefaultDockerfileName
+		case lower:
+			found = lower
+		}
+	}
+	if found != "" {
+		return found
 	}
 	return DefaultDockerfileName
 }

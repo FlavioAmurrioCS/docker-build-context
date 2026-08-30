@@ -3,7 +3,6 @@ package dctx
 import (
 	"path/filepath"
 	"reflect"
-	"strings"
 	"testing"
 )
 
@@ -59,14 +58,13 @@ func TestResolveDockerfileAcceptsLowercase(t *testing.T) {
 	// BuildKit also accepts a lowercase "dockerfile" (moby/moby#10858), and
 	// its ignore file is then "dockerfile.dockerignore".
 	//
-	// The exact casing we resolve to is filesystem-dependent: on a
-	// case-insensitive volume such as macOS's default, stat("Dockerfile")
-	// already succeeds. Docker resolves through the same filesystem, so it
-	// agrees either way -- assert the effect rather than the spelling.
+	// The answer has to be the same on a case-sensitive filesystem and on a
+	// case-insensitive one, which is why resolution reads the directory
+	// listing instead of stat'ing each candidate.
 	dir := filepath.Join("..", "..", "testdata", "lowercase", "context")
 
 	got := ResolveDockerfile(dir, "")
-	if !strings.EqualFold(got, "dockerfile") {
+	if got != "dockerfile" {
 		t.Fatalf("ResolveDockerfile() = %q, want dockerfile", got)
 	}
 
@@ -74,7 +72,7 @@ func TestResolveDockerfileAcceptsLowercase(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.EqualFold(f.Name, "dockerfile.dockerignore") {
+	if f.Name != "dockerfile.dockerignore" {
 		t.Errorf("ignore file = %q, want dockerfile.dockerignore", f.Name)
 	}
 	if len(f.Rules) != 1 || f.Rules[0].Raw != "secret" {
