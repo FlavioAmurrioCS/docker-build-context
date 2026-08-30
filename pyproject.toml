@@ -182,6 +182,25 @@ docstring-code-line-length = 100
 ###############################################################################
 
 ###############################################################################
+# region: rumdl
+###############################################################################
+[tool.rumdl]
+exclude = [
+  # Fixture contexts hold deliberately meaningless markdown; they exist to be
+  # walked, not to be well-formed documents.
+  "testdata",
+]
+disable = [
+  # MD014 wants the "$" prompt dropped from commands that show no output. The
+  # README uses console fences with prompts on purpose, and neighbouring blocks
+  # do show output, so the prompt marks which lines are commands.
+  "MD014",
+]
+###############################################################################
+# endregion: rumdl
+###############################################################################
+
+###############################################################################
 # region: type-checkers
 ###############################################################################
 [tool.mypy]
